@@ -3,9 +3,10 @@ import Link from "next/link";
 import { Component, ReactNode, SyntheticEvent } from "react";
 import DefaultPage from "../../components/DefaultPage";
 import GalleryImage from "../../components/image_gen/GalleryImage";
-
-import styles from "../../styles/image_gen/ImageGen.module.scss"
 import Util from "../../util/Util";
+
+import styles from "../../styles/image_gen/ImageGen.module.scss";
+import nsfwKeywords from "../../../public/nsfw_prompts.json";
 
 interface State {
     isLoadingGallery: boolean,
@@ -15,7 +16,7 @@ interface State {
     canLoadMoreGallery: boolean,
     error?: string,
     src: string,
-    galleryEntries: { id: string, tags: string[] }[]
+    galleryEntries: { id: string, tags: string[], nsfw: boolean }[]
 }
 
 export default class ImageGen extends Component<{}, State> {
@@ -73,7 +74,7 @@ export default class ImageGen extends Component<{}, State> {
                                 </> : <ul id={styles["gallery-images"]}>
                                     {
                                         this.state.galleryEntries.map((entry, index) => {
-                                            return (<GalleryImage id={entry.id} key={index}></GalleryImage>);
+                                            return (<GalleryImage entry={entry} key={index}></GalleryImage>);
                                         })
                                     }
                                 </ul>
@@ -195,7 +196,22 @@ export default class ImageGen extends Component<{}, State> {
                     isLoadingGallery: false,
                     hasLoadedGallery: true,
                     canLoadMoreGallery: data.length === 20,
-                    galleryEntries: [...this.state.galleryEntries, ...data]
+                    galleryEntries: [...this.state.galleryEntries, ...(data.map((entry: { id: string, tags: string[] }) => {
+                        const stringPrompt = entry.tags.join(", ").toLowerCase();
+
+                        let nsfw = false;
+
+                        for (const nsfwKeyword of nsfwKeywords) {
+                            if (stringPrompt.includes(nsfwKeyword)) {
+                                nsfw = true;
+                            }
+                        }
+
+                        return {
+                            ...entry,
+                            nsfw
+                        };
+                    }))]
                 });
             } catch {
                 this.setState({

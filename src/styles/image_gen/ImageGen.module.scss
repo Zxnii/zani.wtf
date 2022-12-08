@@ -140,6 +140,8 @@ $credit-color: #8d8d8d;
         #gallery-images {
             display: flex;
 
+            flex-direction: row;
+
             flex-wrap: wrap;
             gap: 15px 15px;
 
@@ -151,8 +153,15 @@ $credit-color: #8d8d8d;
 
             .gallery-image {
                 display: flex;
+                position: relative;
 
-                flex: 1 0 18%;
+                cursor: pointer;
+
+                box-sizing: border-box;
+
+                align-self: flex-start;
+                flex: 1 1 18%;
+                flex-direction: column;
 
                 border-radius: 5px;
 
@@ -175,6 +184,66 @@ $credit-color: #8d8d8d;
 
                 &:empty {
                     min-height: $max-container-width / 2;
+                }
+
+                &.nsfw {
+                    img {
+                        filter: blur(25px);
+                    }
+
+                    .nsfw-warning {
+                        display: flex;
+                        position: absolute;
+
+                        flex-direction: column;
+
+                        width: 100%;
+                        height: 100%;
+
+                        top: 0;
+                        left: 0;
+
+                        align-items: center;
+                        justify-content: center;
+
+                        span {
+                            display: inline-block;
+
+                            flex-grow: 0;
+
+                            height: 20px;
+
+                            line-height: 20px;
+                            border-radius: 20px;
+
+                            font-weight: bold;
+                            font-size: 14px;
+
+                            padding: 10px 20px;
+
+                            background-color: #b05151;
+
+                            box-shadow: rgba(0, 0, 0, 0.76) 0 0 20px 4px;
+                        }
+                    }
+                }
+
+                &.opened {
+                    background: #1f1f1f;
+
+                    img {
+                        border-radius: 5px 5px 0 0;
+                    }
+
+                    .opened-meta {
+                        box-sizing: border-box;
+                        width: 100%;
+                        padding: 10px;
+
+                        p {
+                            margin: 3px 0;
+                        }
+                    }
                 }
             }
 
