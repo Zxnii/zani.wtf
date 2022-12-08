@@ -1,0 +1,47 @@
+#intro {
+    width: 100%;
+
+    margin-bottom: 5px;
+
+    text-align: center;
+    font-size: 28px;
+}
+
+#motd {
+    font-size: 20px;
+
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 50px;
+
+    text-align: center;
+    color: #b2b2b2;
+}
+
+#links {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+}
+
+.text-highlight {
+    background: rgb(124,124,221);
+    background: linear-gradient(90deg, rgba(124,124,221,1) 0%, rgba(67,67,181,1) 100%);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+}
+
+.separator {
+    width: calc(100% - 2px);
+    height: 1px;
+    margin: 10px 0;
+
+    background-color: #111111;
+}

@@ -1,0 +1,229 @@
+$height: 40px;
+$padding: 10px;
+
+$min-container-width: 300px;
+$max-container-width: 550px;
+
+$credit-color: #8d8d8d;
+
+@keyframes loading-result {
+    0% {
+        background-position-x: 0;
+    }
+    100% {
+        background-position-x: 1000px;
+    }
+}
+
+#imagine-container {
+    #imagine-prompt {
+        box-sizing: border-box;
+
+        width: 75vw;
+        height: $height;
+
+        max-width: $max-container-width;
+        min-width: $min-container-width;
+
+        margin-bottom: 25px;
+        padding: $padding;
+
+        border: #151515 1px solid;
+        border-radius: 5px;
+        outline: none;
+
+        background-color: #111111;
+
+        color: white;
+        line-height: $height - $padding * 2;
+
+        &.disabled {
+            background-color: #151515;
+            border-color: #1f1f1f;
+
+            cursor: not-allowed;
+        }
+    }
+
+    #imagine-result-container {
+        display: flex;
+
+        border-radius: 5px;
+
+        width: 75vw;
+
+        min-width: $min-container-width;
+        max-width: $max-container-width;
+
+        background: rgb(17, 17, 17);
+        background: linear-gradient(90deg, rgba(17, 17, 17, 1) 10%, rgb(23, 23, 23) 50%, rgba(17, 17, 17, 1) 90%);
+
+        background-size: 500px 500px;
+
+        animation-name: loading-result;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+
+        overflow: auto;
+
+        &:empty {
+            height: 75vw;
+            max-height: $max-container-width;
+            min-height: $min-container-width;
+        }
+
+        #imagine-result {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+#screen-center-aligner {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    padding-top: 100px;
+
+    align-items: center;
+
+    h1, h2, h3, h4, h5, h6, a, p, span {
+        user-select: none;
+    }
+
+    #gallery-box {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        flex-grow: 0;
+        justify-self: flex-end;
+
+        width: 100%;
+
+        .gallery-button {
+            width: 75vw;
+            height: $height;
+
+            max-width: $max-container-width;
+            min-width: $min-container-width;
+
+            padding: $padding;
+            margin-bottom: 15px;
+
+            border: #151515 1px solid;
+            border-radius: 5px;
+            outline: none;
+
+            background-color: #111111;
+
+            color: white;
+            line-height: $height - $padding * 2;
+
+            font-family: "SF Pro Regular", sans-serif;
+
+            &:active {
+                background-color: #151515;
+            }
+        }
+
+        #gallery-images {
+            list-style: none;
+
+            width: 75vw;
+
+            min-width: $min-container-width;
+
+            padding: 0;
+
+            column-count: 5;
+            column-gap: 15px;
+            column-fill: auto;
+
+            .gallery-image {
+                display: flex;
+
+                width: 100%;
+
+                border-radius: 5px;
+
+                overflow: hidden;
+
+                background: rgb(17, 17, 17);
+                background: linear-gradient(90deg, rgba(17, 17, 17, 1) 10%, rgb(23, 23, 23) 50%, rgba(17, 17, 17, 1) 90%);
+
+                background-size: 500px 500px;
+
+                animation-name: loading-result;
+                animation-duration: 3s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+
+                break-inside: avoid;
+
+                margin-bottom: 10px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                &:empty {
+                    min-height: $max-container-width / 2;
+                }
+            }
+        }
+
+        @media only screen and (max-width: 1100px) {
+            #gallery-images {
+                column-count: 4;
+            }
+        }
+
+        @media only screen and (max-width: 800px) {
+            #gallery-images {
+                column-count: 3;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            #gallery-images {
+                column-count: 2;
+            }
+        }
+
+        h1, p {
+            text-align: center;
+        }
+    }
+
+    #credit {
+        margin: 0;
+        padding: 5px 0;
+
+        flex-grow: 0;
+        justify-self: flex-end;
+
+        color: #8d8d8d;
+
+        font-size: 12px;
+
+        a {
+            color: #5271a2;
+        }
+    }
+
+    * {
+        flex-grow: 1;
+    }
+}

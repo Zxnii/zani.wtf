@@ -1,0 +1,27 @@
+$height: 50px;
+
+#navbar {
+    position: sticky;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: $height;
+
+    z-index: 1;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(30px);
+
+    a {
+        position: relative;
+
+        display: inline-block;
+
+        margin-left: 10px;
+
+        font-size: 18px;
+        line-height: $height;
+    }
+}
