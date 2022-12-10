@@ -37,3 +37,6 @@ next-env.d.ts
 # ides
 .idea
 .vscode
+
+public/robots.txt
+public/sitemap.xml
