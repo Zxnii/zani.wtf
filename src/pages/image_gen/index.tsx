@@ -2,21 +2,15 @@ import Head from "next/head";
 import Link from "next/link";
 import { Component, ReactNode, SyntheticEvent } from "react";
 import DefaultPage from "../../components/DefaultPage";
-import GalleryImage from "../../components/image_gen/GalleryImage";
 import Util from "../../util/Util";
 
 import styles from "../../styles/image_gen/ImageGen.module.scss";
-import nsfwKeywords from "../../../public/nsfw_prompts.json";
 
 interface State {
-    isLoadingGallery: boolean,
     isLoading: boolean,
     isLoaded: boolean,
-    hasLoadedGallery: boolean,
-    canLoadMoreGallery: boolean,
     error?: string,
     src: string,
-    galleryEntries: { id: string, tags: string[], nsfw: boolean }[]
 }
 
 export default class ImageGen extends Component<{}, State> {
@@ -26,14 +20,10 @@ export default class ImageGen extends Component<{}, State> {
         super(props);
 
         this.state = {
-            isLoadingGallery: false,
             isLoading: false,
             isLoaded: false,
-            hasLoadedGallery: false,
-            canLoadMoreGallery: true,
             error: undefined,
-            src: "",
-            galleryEntries: []
+            src: ""
         };
     }
 
@@ -168,44 +158,5 @@ export default class ImageGen extends Component<{}, State> {
 
             this.genWebsocket?.addEventListener("message", listener);
         });
-    }
-
-    private async loadGallery(): Promise<void> {
-        if (!this.state.isLoadingGallery) {
-            this.setState({
-                isLoadingGallery: true
-            });
-
-            try {
-                const response = await fetch(`${Util.getApiUrl()}/gallery?limit=20&offset=${Math.max(0, this.state.galleryEntries.length - 1)}`);
-                const data = await response.json();
-
-                this.setState({
-                    isLoadingGallery: false,
-                    hasLoadedGallery: true,
-                    canLoadMoreGallery: data.length === 20,
-                    galleryEntries: [...this.state.galleryEntries, ...(data.map((entry: { id: string, tags: string[] }) => {
-                        const stringPrompt = entry.tags.join(", ").toLowerCase();
-
-                        let nsfw = false;
-
-                        for (const nsfwKeyword of nsfwKeywords) {
-                            if (stringPrompt.includes(nsfwKeyword)) {
-                                nsfw = true;
-                            }
-                        }
-
-                        return {
-                            ...entry,
-                            nsfw
-                        };
-                    }))]
-                });
-            } catch {
-                this.setState({
-                    isLoadingGallery: false
-                });
-            }
-        }
     }
 }
